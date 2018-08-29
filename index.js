@@ -82,6 +82,10 @@ if (!module.parent) {
       describe: 'percentage fuzz factor (usually value of 1% is a good choice)',
       default: ''
     })
+    .options('tinify', {
+      describe: 'TinyPNG API key (allows to optimize spritesheet size)',
+      default: undefined
+    })
     .options('algorithm', {
       describe: 'packing algorithm: growing-binpacking (default), binpacking (requires passing --width and --height options), vertical or horizontal',
       default: 'growing-binpacking'
@@ -161,7 +165,7 @@ function generate(files, options, callback) {
     options.format = options.format.map(function(x){return FORMATS[x]});
   }
   else if (options.format || !options.customFormat) {
-    options.format = [FORMATS[options.format] || FORMATS['json']];
+    options.format = [FORMATS[options.format] || FORMATS.json];
   }
   options.name = options.name || 'spritesheet';
   options.spritesheetName = options.name;
