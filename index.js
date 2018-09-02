@@ -28,7 +28,7 @@ if (!module.parent) {
     .options('f', {
       alias: 'format',
       describe: 'format of spritesheet (starling, sparrow, json, yaml, pixi.js, easel.js, egret, zebkit, cocos2d)',
-      default: ''
+      default: 'pixi.js'
     })
     .options('cf', {
       alias: 'customFormat',
@@ -76,15 +76,15 @@ if (!module.parent) {
     })
     .options('scale', {
       describe: 'percentage scale',
-      default: '100%'
+      default: null
     })
     .options('fuzz', {
       describe: 'percentage fuzz factor (usually value of 1% is a good choice)',
-      default: ''
+      default: null
     })
     .options('tinify', {
       describe: 'TinyPNG API key (allows to optimize spritesheet size)',
-      default: undefined
+      default: null
     })
     .options('algorithm', {
       describe: 'packing algorithm: growing-binpacking (default), binpacking (requires passing --width and --height options), vertical or horizontal',
@@ -92,11 +92,11 @@ if (!module.parent) {
     })
     .options('width', {
       describe: 'width for binpacking',
-      default: undefined
+      default: null
     })
     .options('height', {
       describe: 'height for binpacking',
-      default: undefined
+      default: null
     })
     .options('padding', {
       describe: 'padding between images in spritesheet',
@@ -161,10 +161,12 @@ function generate(files, options, callback) {
 
   options = options || {};
   if (Array.isArray(options.format)) {
-    options.format = options.format.map(function(x){return FORMATS[x]});
+    options.format = options.format.map(function(x){
+      return FORMATS[x];
+    });
   }
   else if (options.format || !options.customFormat) {
-    options.format = [FORMATS[options.format] || FORMATS.json];
+    options.format = [FORMATS[options.format] || FORMATS['pixi.js']];
   }
   options.name = options.name || 'spritesheet';
   options.spritesheetName = options.name;
@@ -174,6 +176,12 @@ function generate(files, options, callback) {
   options.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
   options.extension = options.hasOwnProperty('extension') ? options.extension : options.format[0].extension;
   options.trim = options.hasOwnProperty('trim') ? options.trim : options.format[0].trim;
+  options.scale = options.hasOwnProperty('scale') ? options.scale : null;
+  options.fuzz = options.hasOwnProperty('fuzz') ? options.fuzz : null;
+  options.width = options.hasOwnProperty('width') ? options.width : null;
+  options.height = options.hasOwnProperty('height') ? options.height : null;
+  options.tinify = options.hasOwnProperty('tinify') ? options.tinify : null;
+  options.validate = options.hasOwnProperty('validate') ? options.validate : false;
   options.algorithm = options.hasOwnProperty('algorithm') ? options.algorithm : 'growing-binpacking';
   options.sort = options.hasOwnProperty('sort') ? options.sort : 'maxside';
   options.padding = options.hasOwnProperty('padding') ? parseInt(options.padding, 10) : 0;
@@ -203,7 +211,7 @@ function generate(files, options, callback) {
 
   async.waterfall([
     function (callback) {
-      generator.trimImages(files, options, callback);
+      generator.treatImages(files, options, callback);
     },
     function (callback) {
       generator.getImagesSizes(files, options, callback);

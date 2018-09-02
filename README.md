@@ -2,12 +2,13 @@
 
 Spritesheet.js is command-line spritesheet (a.k.a. Texture Atlas) generator written in Node.js.
 
-`NEW: add tinyPNG API support by passing --tinify`
+`NEW: add tinyPNG API support by passing --tinify=YOUR_API_KEY`
 
 ## Supported Spritesheet Formats
 
+* JSON
+* PIXI.js (= JSON with trim enabled)
 * Starling / Sparrow
-* JSON (i.e. PIXI.js)
 * Easel.js
 * cocos2d (i.e. version 2.x)
 * cocos2d-v3 (i.e. version 3.x)
@@ -47,12 +48,12 @@ Options:
 --powerOfTwo  texture width and height should be power of two                                                                                      [default: false]
 --validate    check algorithm returned data                                                                                                        [default: false]
 --algorithm   packing algorithm: growing-binpacking (default), binpacking (requires passing --width and --height options), vertical or horizontal  [default: "growing-binpacking"]
---width       width for binpacking                                                                                                                 [default: undefined]
---height      height for binpacking                                                                                                                [default: undefined]
+--width       width for binpacking                                                                                                                 [default: null]
+--height      height for binpacking                                                                                                                [default: null]
 --padding     padding between images in spritesheet                                                                                                [default: 0]
---scale       percentage scale                                                                                                                     [default: "100%"]
---fuzz        percentage fuzz factor (usually value of 1% is a good choice)                                                                        [default: ""]
---tinify      TinyPNG API key                                                                                                                      [default: undefined]
+--scale       percentage scale, ex: 50%                                                                                                            [default: null]
+--fuzz        percentage fuzz factor (usually value of 1% is a good choice)                                                                        [default: null]
+--tinify      TinyPNG API key                                                                                                                      [default: null]
 
 ```
 
