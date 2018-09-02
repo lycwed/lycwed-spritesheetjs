@@ -40,7 +40,7 @@ Usage: spritesheet-js [options] <files>
 Options:
 -f, --format  format of spritesheet (starling, sparrow, json, pixi.js, easel.js, cocos2d)                                                          [default: "json"]
 -n, --name    name of generated spritesheet                                                                                                        [default: "spritesheet"]
--p, --path    path to export directory                                                                                                             [default: "."]
+-p, --path    path to export directory                                                                                                             [default: "export"]
 --fullpath    include path in file name                                                                                                            [default: false]
 --prefix      prefix for image paths (css format only)                                                                                             [default: ""]
 --trim        removes transparent whitespaces around images                                                                                        [default: false]

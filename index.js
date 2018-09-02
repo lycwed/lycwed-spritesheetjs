@@ -43,7 +43,7 @@ if (!module.parent) {
     .options('p', {
       alias: 'path',
       describe: 'path to export directory',
-      default: '.'
+      default: 'export'
     })
     .options('fullpath', {
       describe: 'include path in file name',
@@ -168,9 +168,9 @@ function generate(files, options, callback) {
   else if (options.format || !options.customFormat) {
     options.format = [FORMATS[options.format] || FORMATS['pixi.js']];
   }
+
   options.name = options.name || 'spritesheet';
-  options.spritesheetName = options.name;
-  options.path = path.resolve(options.path || '.');
+  options.path = path.resolve(options.path || 'export');
   options.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
   options.square = options.hasOwnProperty('square') ? options.square : false;
   options.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
