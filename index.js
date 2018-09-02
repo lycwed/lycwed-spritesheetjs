@@ -131,7 +131,6 @@ if (!module.parent) {
   }
   generate(argv._, argv, function (err) {
     if (err) throw err;
-    console.log('Spritesheet successfully generated');
   });
 }
 
