@@ -175,7 +175,7 @@ function generate(files, options, callback) {
   options.square = options.hasOwnProperty('square') ? options.square : false;
   options.powerOfTwo = options.hasOwnProperty('powerOfTwo') ? options.powerOfTwo : false;
   options.extension = options.hasOwnProperty('extension') ? options.extension : options.format[0].extension;
-  // options.trim = options.hasOwnProperty('trim') ? options.trim : options.format[0].trim;
+  options.trim = options.hasOwnProperty('trim') ? options.trim : options.format[0].trim;
   // options.scale = options.hasOwnProperty('scale') ? options.scale : null;
   // options.fuzz = options.hasOwnProperty('fuzz') ? options.fuzz : null;
   // options.width = options.hasOwnProperty('width') ? options.width : null;
@@ -207,7 +207,16 @@ function generate(files, options, callback) {
   });
 
 
-  if (!fs.existsSync(options.path) && options.path !== '') fs.mkdirSync(options.path);
+  if (!fs.existsSync(options.path)) {
+    if (options.path !== '') {
+      fs.mkdirSync(options.path);
+    }
+  } else {
+    spritesheetPNG = path.resolve(options.path + '/' + options.name + '.png');
+    spritesheetJSON = path.resolve(options.path + '/' + options.name + '.json');
+    fs.unlinkSync(spritesheetPNG.replace(/\\ /g, ' '));
+    fs.unlinkSync(spritesheetJSON.replace(/\\ /g, ' '));
+  }
 
   async.waterfall([
     function (callback) {
