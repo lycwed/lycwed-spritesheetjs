@@ -171,7 +171,7 @@ function generate(dirs, options, callback) {
       files.push(dir + '/' + pattern);
     });
   } else {
-    files = glob.sync(dir + '/' + pattern);
+    files = glob.sync(dirs + '/' + pattern);
   }
 
   if (files.length === 0) {
