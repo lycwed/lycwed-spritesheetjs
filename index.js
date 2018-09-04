@@ -222,9 +222,13 @@ function generate(dir, options, callback) {
     }
   } else {
     spritesheetPNG = path.resolve(options.path + '/' + options.name + '.png');
+    if (fs.existsSync(spritesheetPNG)) {
+      fs.unlinkSync(spritesheetPNG.replace(/\\ /g, ' '));
+    }
     spritesheetJSON = path.resolve(options.path + '/' + options.name + '.json');
-    fs.unlinkSync(spritesheetPNG.replace(/\\ /g, ' '));
-    fs.unlinkSync(spritesheetJSON.replace(/\\ /g, ' '));
+    if (fs.existsSync(spritesheetJSON)) {
+      fs.unlinkSync(spritesheetJSON.replace(/\\ /g, ' '));
+    }
   }
 
   async.waterfall([
