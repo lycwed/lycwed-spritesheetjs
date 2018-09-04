@@ -176,9 +176,9 @@ function generate(dir, options, callback) {
     options.format = [FORMATS[options.format] || FORMATS['pixi.js']];
   }
 
-  var dirPath = path.resolve(dir);
+  var parentPath = path.dirname(files[0]);
 
-  options.name = options.name || dirPath.split('/').pop();
+  options.name = options.name || parentPath.split('/').pop();
   options.path = path.resolve(options.path || 'export');
   options.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
   options.square = options.hasOwnProperty('square') ? options.square : false;
