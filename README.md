@@ -28,19 +28,20 @@ Spritesheet.js is command-line spritesheet (a.k.a. Texture Atlas) generator writ
 ### Command Line
 
 ```bash
-spritesheet-js assets/*.png
+spritesheet-js `your_assets_directory`
 ```
 
 Options:
 
 ```bash
 $ spritesheet-js
-Usage: spritesheet-js [options] <files>
+Usage: spritesheet-js [options] <directory|directories>
 
 Options:
 -f, --format  format of spritesheet (starling, sparrow, json, pixi.js, easel.js, cocos2d)                                                          [default: "json"]
--n, --name    name of generated spritesheet                                                                                                        [default: "spritesheet"]
+-n, --name    name of generated spritesheet                                                                                                        [default: `your_assets_directory` name]
 -p, --path    path to export directory                                                                                                             [default: "export"]
+--ext         files extensions (can be a list: --ext=png,jpg)                                                                                      [default: "png"]
 --fullpath    include path in file name                                                                                                            [default: false]
 --prefix      prefix for image paths (css format only)                                                                                             [default: ""]
 --trim        removes transparent whitespaces around images                                                                                        [default: false]

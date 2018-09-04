@@ -37,13 +37,17 @@ if (!module.parent) {
     })
     .options('n', {
       alias: 'name',
-      describe: 'name of generated spritesheet',
-      default: 'spritesheet'
+      describe: 'name of generated spritesheet, by default the `assets_directory` name',
+      default: null
     })
     .options('p', {
       alias: 'path',
       describe: 'path to export directory',
       default: 'export'
+    })
+    .options('ext', {
+      describe: 'files extensions',
+      default: 'png',
     })
     .options('fullpath', {
       describe: 'include path in file name',
@@ -125,7 +129,7 @@ if (!module.parent) {
     .demand(1)
     .argv;
 
-  if (argv._.length == 0) {
+  if (argv._.length === 0) {
     optimist.showHelp();
     return;
   }
@@ -136,13 +140,14 @@ if (!module.parent) {
 
 /**
  * generates spritesheet
- * @param {string} files pattern of files images files
- * @param {string[]} files paths to image files
+ * @param {string} dirs assets directory
+ * @param {string[]} dirs assets directories
  * @param {object} options
  * @param {string} options.format format of spritesheet (starling, sparrow, json, yaml, pixi.js, zebkit, easel.js, cocos2d)
  * @param {string} options.customFormat external format template
  * @param {string} options.name name of the generated spritesheet
  * @param {string} options.path path to the generated spritesheet
+ * @param {string} options.ext files extension
  * @param {string} options.prefix prefix for image paths
  * @param {boolean} options.fullpath include path in file name
  * @param {boolean} options.trim removes transparent whitespaces around images
@@ -155,11 +160,24 @@ if (!module.parent) {
  * @param {string} options.cssOrder specify the exact order of generated css class names
  * @param {function} callback
  */
-function generate(files, options, callback) {
-  files = Array.isArray(files) ? files : glob.sync(files);
-  if (files.length == 0) return callback(new Error('no files specified'));
-
+function generate(dirs, options, callback) {
   options = options || {};
+
+  var files = [],
+    pattern = '*.{' + options.ext.replace(' ', '') + '}';
+
+  if (Array.isArray(dirs)) {
+    dirs.forEach(function(dir) {
+      files.push(dir + '/' + pattern);
+    });
+  } else {
+    files = glob.sync(dir + '/' + pattern);
+  }
+
+  if (files.length === 0) {
+    return callback(new Error('no files found...'));
+  }
+
   if (Array.isArray(options.format)) {
     options.format = options.format.map(function(x){
       return FORMATS[x];
@@ -169,7 +187,9 @@ function generate(files, options, callback) {
     options.format = [FORMATS[options.format] || FORMATS['pixi.js']];
   }
 
-  options.name = options.name || 'spritesheet';
+  var dirPath = path.resolve(dir);
+
+  options.name = options.name || dirPath.split('/').pop();
   options.path = path.resolve(options.path || 'export');
   options.fullpath = options.hasOwnProperty('fullpath') ? options.fullpath : false;
   options.square = options.hasOwnProperty('square') ? options.square : false;
