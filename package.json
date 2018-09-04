@@ -1,6 +1,6 @@
 {
   "name": "lycwed-spritesheetjs",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Spritesheet generator",
   "main": "index.js",
   "directories": {
