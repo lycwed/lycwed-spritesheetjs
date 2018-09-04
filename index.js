@@ -46,7 +46,7 @@ if (!module.parent) {
       default: 'export'
     })
     .options('ext', {
-      describe: 'files extensions',
+      describe: 'files extension',
       default: 'png',
     })
     .options('fullpath', {
@@ -140,8 +140,7 @@ if (!module.parent) {
 
 /**
  * generates spritesheet
- * @param {string} dirs assets directory
- * @param {string[]} dirs assets directories
+ * @param {string} dir assets directory
  * @param {object} options
  * @param {string} options.format format of spritesheet (starling, sparrow, json, yaml, pixi.js, zebkit, easel.js, cocos2d)
  * @param {string} options.customFormat external format template
@@ -160,20 +159,10 @@ if (!module.parent) {
  * @param {string} options.cssOrder specify the exact order of generated css class names
  * @param {function} callback
  */
-function generate(dirs, options, callback) {
+function generate(dir, options, callback) {
   options = options || {};
 
-  var files = [],
-    pattern = '*.{' + options.ext.replace(' ', '') + '}';
-
-  if (Array.isArray(dirs)) {
-    dirs.forEach(function(dir) {
-      files.push(dir + '/' + pattern);
-    });
-  } else {
-    files = glob.sync(dirs + '/' + pattern);
-  }
-
+  var files = glob.sync(dir + '/*.' + options.ext);
   if (files.length === 0) {
     return callback(new Error('no files found...'));
   }
