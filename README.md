@@ -2,7 +2,12 @@
 
 Spritesheet.js is command-line spritesheet (a.k.a. Texture Atlas) generator written in Node.js.
 
-`NEW: add tinyPNG API support by passing --tinify=YOUR_API_KEY`
+`NEW: add tinyPNG API support`
+
+2 options:
+
+* passing in the command --tinify=YOUR_API_KEY
+* set tiniPNG API key as env variable `export TINIPNG_API_KEY=YOUR_API_KEY`
 
 ## Supported Spritesheet Formats
 
