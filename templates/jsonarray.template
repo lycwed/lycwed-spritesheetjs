@@ -25,5 +25,12 @@
 		{{/trimmed}}
 		}{{^isLast}},{{/isLast}}
 	{{/files}}
-	]
+	],
+	"animations": {
+		"{{{name}}}": [
+		{{#files}}
+			"{{{name}}}{{extension}}"{{^isLast}},{{/isLast}}
+		{{/files}}
+		]
+	}
 }
